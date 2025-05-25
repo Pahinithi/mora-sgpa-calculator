@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from schema.gpa_schema import Semester
-from grade.function import calculate_sgpa, get_academic_standing
+from app.schema.gpa_schema import Semester
+from app.grade.function import calculate_sgpa, get_academic_standing
 
 app = FastAPI()
 
