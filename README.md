@@ -96,6 +96,7 @@ streamlit run app/frontend/streamlit_app.py
 | C-    | 1.7    |
 | D     | 1.0    |
 | F     | 0.0    |
+| I-we  | 0.0    |
 
 ## Academic Standing
 
