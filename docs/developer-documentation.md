@@ -1,4 +1,4 @@
-# Mora SGPA Calculator - Developer Documentation
+# University of Moratuwa - Faculty of Business SGPA Calculator - Developer Documentation
 
 ## Table of Contents
 1. [Project Overview](#project-overview)
@@ -9,12 +9,10 @@
 6. [Database Schema](#database-schema)
 7. [API Documentation](#api-documentation)
 8. [Frontend Components](#frontend-components)
-9. [Development Guidelines](#development-guidelines)
-10. [Testing](#testing)
-11. [Deployment](#deployment)
+9. [Expected Output](#expected-output)
 
 ## Project Overview
-The Mora SGPA Calculator is a web application designed for the University of Moratuwa's Faculty of Business students to calculate their Semester Grade Point Average (SGPA) and track their academic progress. The application provides a user-friendly interface for entering module grades and generates detailed reports in both Excel and PDF formats.
+The University of Moratuwa - Faculty of Business SGPA Calculator is a comprehensive web application designed for students of the Faculty of Business at the University of Moratuwa. This application enables students to calculate their Semester Grade Point Average (SGPA) and monitor their academic progress throughout their degree program. The application features an intuitive interface for entering module grades and generates professional reports in both Excel and PDF formats, making it easier for students to track and document their academic performance.
 
 ### Key Features
 - Student information management
@@ -41,7 +39,7 @@ The application follows a client-server architecture:
 - **Database**: SQLite with SQLAlchemy ORM
 - **PDF Generation**: ReportLab
 - **Excel Generation**: Pandas with openpyxl
-- **Python Version**: 3.8+
+- **Python Version**: 3.11.11
 
 ## Project Structure
 ```
@@ -67,13 +65,13 @@ mora-sgpa-calculator/
 ## Setup and Installation
 
 ### Prerequisites
-- Python 3.8 or higher
+- Python 3.11.11
 - pip (Python package manager)
 
 ### Installation Steps
 1. Clone the repository:
    ```bash
-   git clone [repository-url]
+   git clone https://github.com/Pahinithi/mora-sgpa-calculator.git
    cd mora-sgpa-calculator
    ```
 
@@ -95,41 +93,33 @@ mora-sgpa-calculator/
 
 5. Start the application:
    ```bash
+   # Option 1: Using start script
    ./start.sh
+
+   # Option 2: Manual start
+   # Terminal 1 - Start FastAPI
+   fastapi dev app/main.py
+
+   # Terminal 2 - Start Streamlit
+   streamlit run app/frontend/streamlit_app.py
    ```
 
-## Database Schema
+## Database Management
 
-### User Table
-```sql
-CREATE TABLE users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL,
-    registration_number TEXT UNIQUE NOT NULL,
-    department TEXT NOT NULL,
-    batch TEXT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+### Clearing and Reinitializing Database
+To clear the existing database and start fresh:
+```bash
+# Remove existing database
+rm database/sgpa.db
+
+# Initialize new database
+python database/init_db.py
 ```
 
-### SGPA Table
-```sql
-CREATE TABLE sgpa_records (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    user_id INTEGER NOT NULL,
-    semester TEXT NOT NULL,
-    module_code TEXT NOT NULL,
-    module_title TEXT NOT NULL,
-    grade TEXT NOT NULL,
-    credits REAL NOT NULL,
-    is_gpa BOOLEAN NOT NULL,
-    semester_sgpa REAL,
-    semester_credits REAL,
-    final_sgpa REAL,
-    academic_standing TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id)
-);
+Expected output:
+```
+Initializing database...
+Database initialized successfully!
 ```
 
 ## API Documentation
@@ -186,58 +176,6 @@ CREATE TABLE sgpa_records (
    - Previous data loading
    - Results display
 
-## Development Guidelines
-
-### Code Style
-- Follow PEP 8 guidelines
-- Use meaningful variable and function names
-- Add docstrings for functions and classes
-- Keep functions small and focused
-
-### Git Workflow
-1. Create feature branches from main
-2. Write descriptive commit messages
-3. Create pull requests for code review
-4. Merge only after approval
-
-### Error Handling
-- Use try-except blocks for database operations
-- Validate user input
-- Provide meaningful error messages
-- Log errors appropriately
-
-## Testing
-
-### Unit Tests
-- Test database operations
-- Test SGPA calculations
-- Test input validation
-
-### Integration Tests
-- Test API endpoints
-- Test frontend-backend integration
-- Test database integration
-
-## Deployment
-
-### Local Development
-1. Run FastAPI server:
-   ```bash
-   uvicorn app.main:app --reload
-   ```
-
-2. Run Streamlit app:
-   ```bash
-   streamlit run app/frontend/streamlit_app.py
-   ```
-
-### Production Deployment
-1. Set up a production server
-2. Configure environment variables
-3. Set up a reverse proxy (e.g., Nginx)
-4. Use a production-grade database
-5. Implement proper security measures
-
 ## Contributing
 1. Fork the repository
 2. Create a feature branch
@@ -245,7 +183,53 @@ CREATE TABLE sgpa_records (
 4. Submit a pull request
 
 ## License
-[Specify your license here]
+MIT License
 
 ## Contact
-[Add contact information] 
+- **Developer**: Nithilan Pahirathan
+- **Email**: nithilan32@gmail.com
+- **GitHub**: https://github.com/Pahinithi 
+
+## Expected Output
+
+### Frontend Interface
+When you run the application successfully, you will see the following interface:
+
+1. **Main Application Window**
+   - Title: "🎓 SGPA Calculator | University of Moratuwa - Faculty of Business"
+   - Clean, modern interface with a white background
+
+2. **Sidebar Components**
+   - Student Information section with input fields for:
+     - Full Name
+     - Registration Number
+     - Department (dropdown with options)
+     - Batch
+   - Settings section
+   - Load Previous Data section
+
+3. **Main Content Area**
+   - Semester expansion panels (1-8)
+   - Internship section
+   - Each semester panel contains:
+     - Number of modules selector
+     - Module input forms with:
+       - Module Code
+       - Module Title
+       - Grade selection
+       - Credits input
+       - GPA module checkbox
+
+4. **Results Section** (appears after calculation)
+   - Student Information display
+   - Final SGPA result
+   - Academic Standing
+   - Semester-wise results
+   - Export options (Excel and PDF)
+
+5. **Success Messages**
+   - "Data saved successfully!" when data is saved
+   - "Data loaded successfully!" when previous data is loaded
+   - "Calculating..." spinner during calculations
+
+The application provides an intuitive, user-friendly interface that guides students through the process of entering their grades and viewing their academic results. 
